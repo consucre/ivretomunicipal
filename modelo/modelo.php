@@ -801,6 +801,54 @@ $guardar = $this->pdo->prepare('INSERT INTO partido set
         }
 
 
+        public function ObtenerResultados(){
+            $ver = $this->pdo->query('
+                   SELECT 
+                E.*, 
+								R.Ronda,
+                Eq1.ind_nombre_equipo NameEquipo1, 
+                Eq2.ind_nombre_equipo NameEquipo2, 
+                Eq3.ind_nombre_equipo NameEquipo3, 
+                Eq4.ind_nombre_equipo NameEquipo4,
+								(SELECT			
+								SUM(FlagAcierto)
+								FROM
+                historial 
+								WHERE		
+                Encuentro =E.Id AND Equipo=E.Equipo1) AS PuntosEquipo1,
+							(SELECT			
+								SUM(FlagAcierto)
+								FROM
+                historial 
+								WHERE		
+                Encuentro =E.Id AND Equipo=E.Equipo2) AS PuntosEquipo2,
+								(SELECT			
+								SUM(FlagAcierto)
+								FROM
+                historial 
+								WHERE		
+                Encuentro =E.Id AND Equipo=E.Equipo3) AS PuntosEquipo3,
+								(SELECT			
+								SUM(FlagAcierto)
+								FROM
+                historial 
+								WHERE		
+                Encuentro =E.Id AND Equipo=E.Equipo4) AS PuntosEquipo4
+                FROM encuentros AS E
+								INNER JOIN rondas R ON (E.CodRonda=R.CodRonda)
+                INNER JOIN equipos Eq1 ON (E.Equipo1=Eq1.pk_num_equipo)
+                INNER JOIN equipos Eq2 ON (E.Equipo2=Eq2.pk_num_equipo)
+                LEFT JOIN equipos Eq3 ON (E.Equipo3=Eq3.pk_num_equipo)
+                LEFT JOIN equipos Eq4 ON (E.Equipo4=Eq4.pk_num_equipo)
+								
+								WHERE E.Estatus = 0');
+            $ver->setFetchMode(PDO::FETCH_ASSOC);
+            return $ver->fetchAll();
+
+
+        }
+
+
 
 
     }

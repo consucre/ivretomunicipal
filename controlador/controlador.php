@@ -50,6 +50,12 @@
 
         }
 
+        public function ObtenerResultados(){
+
+            return $this->model->ObtenerResultados();
+
+        }
+
         public function ObtenerDelantera($Id){
 
             return $this->model->ObtenerDelantera($Id);

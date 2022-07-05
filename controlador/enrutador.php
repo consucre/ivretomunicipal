@@ -289,7 +289,7 @@ if (isset($_POST['caso']) && !empty($_POST['caso'])){
 
 
         case 'obtenerResultados':
-            $resp = $con->obtenerPregunta();
+            $resp = $con->ObtenerResultados();
             $data['data'] = $resp;
             echo json_encode($data);
             break;
@@ -376,6 +376,9 @@ if (isset($_POST['caso']) && !empty($_POST['caso'])){
                 $data['encuentro'] = $resp2;
                 $resp5 = $con->Obtenerpuntos($_POST['IdPartido']);
                 $data['puntos'] = $resp5;
+
+                $resp3=   $con->ObtenerTurnos($_POST['IdPartido']);
+                $data['turnos']=$resp3;
 
                 $respGanador = $con->verEquipo($resp2['Ganador']);
                 $data['Ganador'] = $respGanador;

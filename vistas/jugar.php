@@ -236,7 +236,7 @@ $products=$a->obtenerEquipos();
 
         <button class="btn btn-options" id="btnAnterior" style="width: 20%;" onclick="AnularAnterior();">Anular Pregunta Anterior</button>
         <button class="btn btn-options" style="width: 20%;" onclick="AnularActual();">Anular Pregunta Actual</button>
-        <button class="btn btn-danger" style="width: 15%;" onclick="finalizar();">Finalizar</button></div>
+        <button class="btn btn-danger" style="width: 15%;" onclick="checkFinalizar();">Finalizar</button></div>
 
 </div>
 
@@ -625,33 +625,32 @@ $products=$a->obtenerEquipos();
         var IdEquipo2 = $("#IdEquipo2").val()
         var IdEquipo3 = $("#IdEquipo3").val()
         var IdEquipo4 = $("#IdEquipo4").val()
-
+        var maxPuntuacion= 0;
+        var numMax = 0;
         var Equipo1 = $("#PuntosEquipo"+IdEquipo1).text()
         var Equipo2 = $("#PuntosEquipo"+IdEquipo2).text()
         var Equipo3 = $("#PuntosEquipo"+IdEquipo3).text()
         var Equipo4 = $("#PuntosEquipo"+IdEquipo4).text()
 
-            if(IdEquipo4 != 0 && IdEquipo4 != '0')
-            {
-                if(Equipo1 != Equipo2 && Equipo1 != Equipo3 && Equipo1 != Equipo4 && Equipo2 != Equipo3 && Equipo2 != Equipo4 && Equipo3 != Equipo4)
-                {
-                    finalizar()
-                }else{
-                    swal("Advertencia!", "Existen equipos con la misma cantidad de puntos.", "warning");
-                }
+        if(Equipo1 > maxPuntuacion)
+            maxPuntuacion = Equipo1
+        if(Equipo2 > maxPuntuacion)
+            maxPuntuacion = Equipo2
+        if(Equipo3 > maxPuntuacion)
+            maxPuntuacion = Equipo3
+        if(Equipo4 > maxPuntuacion)
+            maxPuntuacion = Equipo4
 
-            }
-            else if(IdEquipo3 != 0 && IdEquipo3 != '0')
-            {
-                if(Equipo1 != Equipo2 && Equipo1 != Equipo3 && Equipo3 != Equipo2)
-                {
-                    finalizar()
-                }else{
-                    swal("Advertencia!", "Existen equipos con la misma cantidad de puntos.", "warning");
-                }
+        if(Equipo1 == maxPuntuacion)
+            numMax++;
+        if(Equipo2 == maxPuntuacion)
+            numMax++;
+        if(Equipo3 == maxPuntuacion)
+            numMax++;
+        if(Equipo4 == maxPuntuacion)
+            numMax++;
 
-            }
-            else if(Equipo1 != Equipo2)
+    if(numMax == 1)
             {
                 finalizar()
             }else{
